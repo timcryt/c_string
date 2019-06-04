@@ -68,8 +68,21 @@ void test_push() {
     string_free(&t);
 }
 
+void test_pop() {
+    string s = string_new();
+    
+    string_from_cstr(&s, "Some string!");
+    char c = string_pop(&s);
+    
+    assert(c == '!');
+    assert(!memcmp(s.data, "Some string", s.len));
+    
+    string_free(&s);
+}
+
 int main() {
     test_constructs_destructors();
     test_append();
     test_push();
+    test_pop();
 }

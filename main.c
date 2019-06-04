@@ -68,3 +68,11 @@ void string_push(string * dest, char c) {
     dest->data[dest->len] = c;
     dest->len++;
 }
+
+char string_pop(string * src) {
+    if (src->len != 0) {
+        src->len--;
+        return src->data[src->len];
+    }
+    return 0;
+}
