@@ -32,4 +32,8 @@ void string_from_cstr(string * dest, const char * src) {
 
 }
 
-
+void string_to_cstr(char ** dest, string src) {
+    *dest = malloc(src.len + 1);
+    memcpy(*dest, src.data, src.len);
+    (*dest)[src.len] = 0;
+}
