@@ -17,4 +17,6 @@ void string_push(string * dest, char c);
 
 char string_pop(string * src);
 
+string string_slice(string str, unsigned int start, unsigned int end);
+
 #endif

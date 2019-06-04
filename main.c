@@ -11,7 +11,7 @@ string string_new() {
 
 void string_free(string * x) {
     x->len = 0;
-    if (x->data != NULL) {
+    if (x->data != NULL && x->capacity != 0) {
         free(x->data);
         x->data = NULL;
         x->capacity = 0;
@@ -27,7 +27,9 @@ void string_set_capacity(string * x, unsigned int new_capacity) {
     char * new_data = malloc(new_capacity);
     if (x->data != NULL) {
         memcpy(new_data, x->data, l);
-        free(x->data);
+        if (x->data != 0) {
+            free(x->data);
+        }
     }
     
     x->data = new_data;
@@ -75,4 +77,17 @@ char string_pop(string * src) {
         return src->data[src->len];
     }
     return 0;
+}
+
+string string_slice(string str, unsigned int start, unsigned int end) {
+    if (end < start || start >= str.len || str.data == NULL) {
+        string t = {NULL, 0, 0};
+        return t;
+    } else if (end > str.len) {
+        string t = {str.data + start, str.len - start - 1, 0};
+        return t;
+    } else {
+        string t = {str.data + start, end - start, 0};
+        return t;
+    }
 }

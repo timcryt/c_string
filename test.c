@@ -80,9 +80,35 @@ void test_pop() {
     string_free(&s);
 }
 
+void test_slice() {
+    string s = string_new();
+    
+    string_from_cstr(&s, "Some string!");
+    
+    string t;
+    
+    t = string_slice(s, 0, 100);
+    assert(!memcmp(t.data, "Some string", t.len));
+    
+    t = string_slice(s, 0, 4);
+    assert(!memcmp(t.data, "Some", t.len));
+    
+    t = string_slice(s, 10, 1);
+    assert(t.data == NULL);
+    
+    t = string_slice(s, 100, 110);
+    assert(t.data == NULL);
+    
+    t = string_slice(s, 2, 8);
+    assert(!memcmp(t.data, "me str", t.len));
+    
+    string_free(&s);
+}
+
 int main() {
     test_constructs_destructors();
     test_append();
     test_push();
     test_pop();
+    test_slice();
 }
