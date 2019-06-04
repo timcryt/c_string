@@ -60,3 +60,11 @@ void string_append(string * dest, string src) {
     memcpy(dest->data + dest->len, src.data, src.len);
     dest->len += src.len;
 }
+
+void string_push(string * dest, char c) {
+    if (dest->capacity <= dest->len) {
+        string_set_capacity(dest, dest->len * 2 + 1);
+    }
+    dest->data[dest->len] = c;
+    dest->len++;
+}

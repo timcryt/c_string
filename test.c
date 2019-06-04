@@ -44,9 +44,32 @@ void test_append() {
     string_append(&s, t);
     assert(!memcmp(s.data, "Some string with some information", s.len));    
     
+    string_free(&s);
+    string_free(&t);
+}
+
+void test_push() {
+    string s = string_new();
+    
+    string_push(&s, 'A');
+    assert(!memcmp(s.data, "A", 1));
+    
+    string_from_cstr(&s, "Hello");
+    string_push(&s, ' ');
+    
+    string t = string_new();
+    string_from_cstr(&t, "World!");
+    
+    string_append(&s, t);
+    
+    assert(!memcmp(s.data, "Hello World!", s.len));
+    
+    string_free(&s);
+    string_free(&t);
 }
 
 int main() {
     test_constructs_destructors();
     test_append();
+    test_push();
 }
