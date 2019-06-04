@@ -18,6 +18,21 @@ void string_free(string * x) {
     }
 }
 
+void string_set_capacity(string * x, unsigned int new_capacity) {
+    unsigned int l = x->len;
+    if (new_capacity < x->len) {
+        l = new_capacity;
+    }
+    
+    char * new_data = malloc(new_capacity);
+    if (x->data != NULL) {
+        memcpy(new_data, x->data, l);
+        free(x->data);
+    }
+    
+    x->data = new_data;
+}
+
 void string_from_cstr(string * dest, const char * src) {
     unsigned int l = strlen(src);
     
@@ -36,4 +51,12 @@ void string_to_cstr(char ** dest, string src) {
     *dest = malloc(src.len + 1);
     memcpy(*dest, src.data, src.len);
     (*dest)[src.len] = 0;
+}
+
+void string_append(string * dest, string src) {
+    if (dest->capacity < dest->len + src.len) {
+        string_set_capacity(dest, dest->len + src.len);
+    }
+    memcpy(dest->data + dest->len, src.data, src.len);
+    dest->len += src.len;
 }

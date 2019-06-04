@@ -25,6 +25,28 @@ void test_constructs_destructors() {
     string_free(&s);
 }
 
+void test_append() {
+    string s = string_new();
+    string_from_cstr(&s, "Some string");
+    
+    string t = string_new();
+    string_from_cstr(&t, " with some information");
+    
+    string_append(&s, t);
+    
+    assert(!memcmp(s.data, "Some string with some information", s.len));
+    
+    string_free(&t);
+    string_append(&s, t);
+    assert(!memcmp(s.data, "Some string with some information", s.len));
+    
+    string_from_cstr(&t, "");
+    string_append(&s, t);
+    assert(!memcmp(s.data, "Some string with some information", s.len));    
+    
+}
+
 int main() {
     test_constructs_destructors();
+    test_append();
 }
