@@ -9,4 +9,6 @@ typedef struct {
 string string_new();
 void string_free(string * x);
 
+void string_from_cstr(string * dest, const char * src);
+
 #endif

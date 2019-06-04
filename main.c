@@ -1,4 +1,5 @@
 #include <stdlib.h>
+#include <string.h>
 
 #include "c_string.h"
 
@@ -15,6 +16,20 @@ void string_free(string * x) {
         x->data = NULL;
         x->capacity = 0;
     }
+}
+
+void string_from_cstr(string * dest, const char * src) {
+    unsigned int l = strlen(src);
+    
+    if (dest->capacity < l) {
+        string_free(dest);
+        dest->data = malloc(l);
+        dest->capacity = l;
+    }
+    
+    memcpy(dest->data, src, l);
+    dest->len = l;
+
 }
 
 
