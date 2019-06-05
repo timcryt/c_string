@@ -130,3 +130,37 @@ void string_trim(string * str) {
     string_trim_left(str);
 }
 
+int string_cmp(string a, string b) {
+    int l = a.len;
+    if (b.len < a.len) {
+        l = b.len;
+    }
+    int f = memcmp(a.data, b.data, l);
+    if (f == 0) {
+        if (a.len < b.len) {
+            return -1;
+        } else if (a.len > b.len) {
+            return 1;
+        } else {
+            return 0;
+        }
+    } else {
+        if (f > 0) {
+            return 1;
+        } else {
+            return 0;
+        }
+    }
+}
+
+inline int string_lt(string a, string b) {
+    return string_cmp(a, b) == -1;
+}
+
+inline int string_eq(string a, string b) {
+    return string_cmp(a, b) == 0;
+}
+
+inline int string_gt(string a, string b) {
+    return string_cmp(a, b) == 1;
+}

@@ -147,6 +147,18 @@ void test_trim() {
     string_free(&s);
 }
 
+void test_cmp() {
+    string s = string_new();
+    string_from_cstr(&s, "HELLO WORLD");
+
+    assert(string_lt(string_slice(s, 0, s.len - 1), s));
+    assert(string_gt(s, string_slice(s, 1, s.len)));
+    assert(string_eq(string_slice(s, 0, 0), string_slice(s, 0, 0)));
+    assert(string_eq(string_slice(s, 2, 3), string_slice(s, 3, 4)));
+
+    string_free(&s);
+}
+
 int main() {
     test_constructs_destructors();
     test_append();
@@ -155,4 +167,5 @@ int main() {
     test_slice();
     test_insert();
     test_trim();
+    test_cmp();
 }

@@ -27,4 +27,9 @@ void string_trim_left(string * str);
 void string_trim_right(string * str);
 void string_trim(string * str);
 
+int string_cmp(string a, string b);
+int string_lt(string a, string b);
+int string_eq(string a, string b);
+int string_gt(string a, string b);
+
 #endif
