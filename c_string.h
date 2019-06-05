@@ -11,7 +11,7 @@ typedef struct {
 string string_new();
 void string_free(string * x);
 
-void string_from_cstr(string * dest, const char * src);
+void string_from_cstr(string * dest, char * src);
 string slice_from_cstr(char * src);
 void string_to_cstr(char ** dest, string src);
 

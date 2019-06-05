@@ -8,7 +8,6 @@ void test_constructs_destructors() {
     
     string_from_cstr(&s, "Hello World!");
     assert(s.len == 12);
-    assert(s.capacity == 12);
     assert(!memcmp(s.data, "Hello World!", s.len));
     
     char * t;
@@ -19,7 +18,6 @@ void test_constructs_destructors() {
     
     string_from_cstr(&s, "Some string");
     assert(s.len == 11);
-    assert(s.capacity == 12);
     assert(!memcmp(s.data, "Some string", s.len));
     
     string_free(&s);

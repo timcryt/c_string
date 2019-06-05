@@ -35,18 +35,9 @@ void string_set_capacity(string * x, unsigned int new_capacity) {
     x->data = new_data;
 }
 
-void string_from_cstr(string * dest, const char * src) {
-    unsigned int l = strlen(src);
-    
-    if (dest->capacity < l) {
-        string_free(dest);
-        dest->data = malloc(l);
-        dest->capacity = l;
-    }
-    
-    memcpy(dest->data, src, l);
-    dest->len = l;
-
+void string_from_cstr(string * dest, char * src) {
+    string_free(dest);
+    *dest = slice_from_cstr(src);
 }
 
 string slice_from_cstr(char * src) {
@@ -126,8 +117,12 @@ void string_trim_left(string * str) {
     while (first_smb < str->len && str->data[first_smb] == ' ') {
         first_smb++;
     } 
-    for (unsigned int i = first_smb; i < str->len; i++) {
-        str->data[i-first_smb] = str->data[i];
+    if (str->capacity > 0) {
+        for (unsigned int i = first_smb; i < str->len; i++) {
+            str->data[i-first_smb] = str->data[i];
+        }
+    } else {
+        str->data += first_smb;
     }
     str->len -= first_smb;
 }
