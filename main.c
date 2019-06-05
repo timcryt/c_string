@@ -27,7 +27,9 @@ void string_set_capacity(string * x, unsigned int new_capacity) {
     char * new_data = malloc(new_capacity);
     if (x->data != NULL) {
         memcpy(new_data, x->data, l);
-        free(x->data);
+        if (x->capacity != 0) {
+            free(x->data);
+        }
     }
     x->capacity = new_capacity;
     x->data = new_data;
@@ -45,6 +47,11 @@ void string_from_cstr(string * dest, const char * src) {
     memcpy(dest->data, src, l);
     dest->len = l;
 
+}
+
+string slice_from_cstr(char * src) {
+    string t = {src, strlen(src), 0};
+    return t;
 }
 
 void string_to_cstr(char ** dest, string src) {
