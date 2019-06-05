@@ -120,6 +120,33 @@ void test_insert() {
     string_free(&t);
 }
 
+void test_trim() {
+    string s = string_new();
+    string_from_cstr(&s, "    ");
+
+    string_trim_left(&s);
+    assert(s.len == 0);
+
+    string_from_cstr(&s, "    ");
+
+    string_trim_right(&s);
+    assert(s.len == 0);
+
+    string_from_cstr(&s, "    Hello World!");
+    string_trim(&s);
+    assert(!memcmp(s.data, "Hello World!", s.len));
+
+    string_from_cstr(&s, "  Hello World!  ");
+    string_trim(&s);
+    assert(!memcmp(s.data, "Hello World!", s.len));
+
+    string_from_cstr(&s, "Hello World!    ");
+    string_trim(&s);
+    assert(!memcmp(s.data, "Hello World!", s.len));
+
+    string_free(&s);
+}
+
 int main() {
     test_constructs_destructors();
     test_append();
@@ -127,4 +154,5 @@ int main() {
     test_pop();
     test_slice();
     test_insert();
+    test_trim();
 }

@@ -23,4 +23,8 @@ string string_slice(string str, unsigned int start, unsigned int end);
 
 void string_insert(string * dest, string src, unsigned int start);
 
+void string_trim_left(string * str);
+void string_trim_right(string * str);
+void string_trim(string * str);
+
 #endif

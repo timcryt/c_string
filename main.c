@@ -108,3 +108,25 @@ void string_insert(string * dest, string src, unsigned int start) {
     }
 }
 
+void string_trim_right(string * str) {
+    while (str->len > 0 && str->data[str->len-1] == ' ') {
+        str->len--;
+    }
+}
+
+void string_trim_left(string * str) {
+    unsigned int first_smb = 0;
+    while (first_smb < str->len && str->data[first_smb] == ' ') {
+        first_smb++;
+    } 
+    for (unsigned int i = first_smb; i < str->len; i++) {
+        str->data[i-first_smb] = str->data[i];
+    }
+    str->len -= first_smb;
+}
+
+void string_trim(string * str) {
+    string_trim_right(str);
+    string_trim_left(str);
+}
+
