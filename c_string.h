@@ -32,4 +32,7 @@ int string_lt(string a, string b);
 int string_eq(string a, string b);
 int string_gt(string a, string b);
 
+unsigned int string_find(string where, string what);
+int string_contains(string where, string what);
+
 #endif

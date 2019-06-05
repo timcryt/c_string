@@ -159,6 +159,25 @@ void test_cmp() {
     string_free(&s);
 }
 
+void test_find() {
+    string s = string_new();
+    string_from_cstr(&s, "Hello, World!");
+
+    string t = string_new();
+    string_from_cstr(&t, "ll");
+
+    assert(string_find(s, t) == 2);
+
+    string_from_cstr(&t, "o");
+    assert(string_find(s, t) == 4);
+
+    string_from_cstr(&t, "A");
+    assert(string_find(s, t) == s.len);
+
+    string_free(&s);
+    string_free(&t);
+}
+
 int main() {
     test_constructs_destructors();
     test_append();
@@ -168,4 +187,5 @@ int main() {
     test_insert();
     test_trim();
     test_cmp();
+    test_find();
 }

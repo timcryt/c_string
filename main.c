@@ -164,3 +164,22 @@ inline int string_eq(string a, string b) {
 inline int string_gt(string a, string b) {
     return string_cmp(a, b) == 1;
 }
+
+unsigned int string_find(string where, string what) {
+    if (what.len > where.len) {
+        return where.len;
+    } else if (what.len == 0) {
+        return 0;
+    } else {
+        for (unsigned int i = 0; i + what.len <= where.len; i++) {
+            if (!memcmp(where.data + i, what.data, what.len)) {
+                return i;
+            }
+        }
+        return where.len;
+    }
+}
+
+int string_contains(string where, string what) {
+    return string_find(where, what) != where.len;
+}
