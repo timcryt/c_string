@@ -1,5 +1,7 @@
 #ifndef __C_STRING
 
+#define __C_STRING
+
 typedef struct {
     char * data;
     unsigned int len;
@@ -18,5 +20,7 @@ void string_push(string * dest, char c);
 char string_pop(string * src);
 
 string string_slice(string str, unsigned int start, unsigned int end);
+
+void string_insert(string * dest, string src, unsigned int start);
 
 #endif

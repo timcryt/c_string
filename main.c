@@ -27,11 +27,9 @@ void string_set_capacity(string * x, unsigned int new_capacity) {
     char * new_data = malloc(new_capacity);
     if (x->data != NULL) {
         memcpy(new_data, x->data, l);
-        if (x->data != 0) {
-            free(x->data);
-        }
+        free(x->data);
     }
-    
+    x->capacity = new_capacity;
     x->data = new_data;
 }
 
@@ -56,11 +54,13 @@ void string_to_cstr(char ** dest, string src) {
 }
 
 void string_append(string * dest, string src) {
-    if (dest->capacity < dest->len + src.len) {
-        string_set_capacity(dest, dest->len + src.len);
+    if (src.len > 0) {
+        if (dest->capacity < dest->len + src.len) {
+            string_set_capacity(dest, dest->len + src.len);
+        }
+        memcpy(dest->data + dest->len, src.data, src.len);
+        dest->len += src.len;
     }
-    memcpy(dest->data + dest->len, src.data, src.len);
-    dest->len += src.len;
 }
 
 void string_push(string * dest, char c) {
@@ -91,3 +91,20 @@ string string_slice(string str, unsigned int start, unsigned int end) {
         return t;
     }
 }
+
+void string_insert(string * dest, string src, unsigned int start) {
+    if (src.len > 0) {
+        if (start >= dest->len) {
+            string_append(dest, src);
+        } else {
+            if (dest->capacity < dest->len + src.len) {
+                string_set_capacity(dest, dest->len + src.len);
+            }
+            for (int i = dest->len - 1; i > start; i--) {
+                dest->data[i+src.len] = dest->data[i];
+            }
+            memcpy(dest->data + start + 1, src.data, src.len);
+        }
+    }
+}
+

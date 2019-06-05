@@ -105,10 +105,26 @@ void test_slice() {
     string_free(&s);
 }
 
+void test_insert() {
+    string s = string_new();
+    string_from_cstr(&s, "HellWorld!");
+    
+    string t = string_new();
+    string_from_cstr(&t, "o ");
+    
+    string_insert(&s, t, 3);
+    
+    assert(!memcmp(s.data, "Hello World!", s.len));
+    
+    string_free(&s);
+    string_free(&t);
+}
+
 int main() {
     test_constructs_destructors();
     test_append();
     test_push();
     test_pop();
     test_slice();
+    test_insert();
 }
