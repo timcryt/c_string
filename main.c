@@ -18,7 +18,6 @@ void string_free(string * x) {
     x->data = NULL;
 }
 
-
 void string_set_capacity(string * x, unsigned int new_capacity) {
     unsigned int l = x->len;
     if (new_capacity < x->len) {
@@ -54,6 +53,11 @@ void string_to_cstr(char ** dest, string * src) {
     string_push(src, 0);
     *dest = src->data;
     src->owned = false;
+}
+
+string string_copy(string str) {
+    string t = {str.data, str.len, 0, false};
+    return t;
 }
 
 void string_append(string * dest, string src) {

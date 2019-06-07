@@ -17,6 +17,7 @@ void string_free(string * x);
 void string_from_cstr(string * dest, char * src);
 string slice_from_cstr(char * src);
 void string_to_cstr(char ** dest, string * src);
+string string_copy(string str);
 
 void string_append(string * dest, string src);
 void string_push(string * dest, char c);

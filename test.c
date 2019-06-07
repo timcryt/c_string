@@ -19,6 +19,10 @@ void test_constructs_destructors() {
     string_from_cstr(&s, "Some string");
     assert(s.len == 11);
     assert(!memcmp(s.data, "Some string", s.len));
+
+    string u = string_copy(s);
+
+    assert(!memcmp(u.data, "Some string", u.len));
     
     string_free(&s);
 }
