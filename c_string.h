@@ -2,10 +2,13 @@
 
 #define __C_STRING
 
+#include <stdbool.h>
+
 typedef struct {
     char * data;
     unsigned int len;
     unsigned int capacity;
+    bool owned;
 } string;
 
 string string_new();
@@ -13,7 +16,7 @@ void string_free(string * x);
 
 void string_from_cstr(string * dest, char * src);
 string slice_from_cstr(char * src);
-void string_to_cstr(char ** dest, string src);
+void string_to_cstr(char ** dest, string * src);
 
 void string_append(string * dest, string src);
 void string_push(string * dest, char c);

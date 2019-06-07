@@ -11,7 +11,7 @@ void test_constructs_destructors() {
     assert(!memcmp(s.data, "Hello World!", s.len));
     
     char * t;
-    string_to_cstr(&t, s);
+    string_to_cstr(&t, &s);
     assert(strlen(t) == 12);
     assert(!strcmp(t, "Hello World!"));
     free(t);

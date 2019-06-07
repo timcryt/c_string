@@ -5,34 +5,39 @@
 
 
 string string_new() {
-    string t = {NULL, 0, 0};
+    string t = {NULL, 0, 0, false};
     return t;
 }
 
 void string_free(string * x) {
-    x->len = 0;
-    if (x->data != NULL && x->capacity != 0) {
+    x->len = 0; 
+    if (x->data != NULL && x->owned) {
         free(x->data);
-        x->data = NULL;
-        x->capacity = 0;
+        x->owned = false;
     }
+    x->data = NULL;
 }
+
 
 void string_set_capacity(string * x, unsigned int new_capacity) {
     unsigned int l = x->len;
     if (new_capacity < x->len) {
         l = new_capacity;
     }
-    
     char * new_data = malloc(new_capacity);
     if (x->data != NULL) {
         memcpy(new_data, x->data, l);
-        if (x->capacity != 0) {
+        if (x->owned) {
             free(x->data);
         }
     }
     x->capacity = new_capacity;
     x->data = new_data;
+    x->owned = true;
+}
+
+void string_own(string * str) {
+    string_set_capacity(str, str->len);
 }
 
 void string_from_cstr(string * dest, char * src) {
@@ -41,19 +46,19 @@ void string_from_cstr(string * dest, char * src) {
 }
 
 string slice_from_cstr(char * src) {
-    string t = {src, strlen(src), 0};
+    string t = {src, strlen(src), 0, false};
     return t;
 }
 
-void string_to_cstr(char ** dest, string src) {
-    *dest = malloc(src.len + 1);
-    memcpy(*dest, src.data, src.len);
-    (*dest)[src.len] = 0;
+void string_to_cstr(char ** dest, string * src) {
+    string_push(src, 0);
+    *dest = src->data;
+    src->owned = false;
 }
 
 void string_append(string * dest, string src) {
     if (src.len > 0) {
-        if (dest->capacity < dest->len + src.len) {
+        if (!dest->owned || dest->capacity < dest->len + src.len) {
             string_set_capacity(dest, dest->len + src.len);
         }
         memcpy(dest->data + dest->len, src.data, src.len);
@@ -62,7 +67,7 @@ void string_append(string * dest, string src) {
 }
 
 void string_push(string * dest, char c) {
-    if (dest->capacity <= dest->len) {
+    if (!dest->owned || dest->capacity <= dest->len) {
         string_set_capacity(dest, dest->len * 2 + 1);
     }
     dest->data[dest->len] = c;
@@ -79,13 +84,13 @@ char string_pop(string * src) {
 
 string string_slice(string str, unsigned int start, unsigned int end) {
     if (end < start || start >= str.len || str.data == NULL) {
-        string t = {NULL, 0, 0};
+        string t = {NULL, 0, 0, false};
         return t;
     } else if (end > str.len) {
-        string t = {str.data + start, str.len - start - 1, 0};
+        string t = {str.data + start, str.len - start - 1, 0, false};
         return t;
     } else {
-        string t = {str.data + start, end - start, 0};
+        string t = {str.data + start, end - start, 0, false};
         return t;
     }
 }
@@ -95,7 +100,7 @@ void string_insert(string * dest, string src, unsigned int start) {
         if (start >= dest->len) {
             string_append(dest, src);
         } else {
-            if (dest->capacity < dest->len + src.len) {
+            if (!dest->owned || dest->capacity < dest->len + src.len) {
                 string_set_capacity(dest, dest->len + src.len);
             }
             for (int i = dest->len - 1; i > start; i--) {
@@ -117,7 +122,7 @@ void string_trim_left(string * str) {
     while (first_smb < str->len && str->data[first_smb] == ' ') {
         first_smb++;
     } 
-    if (str->capacity > 0) {
+    if (str->owned) {
         for (unsigned int i = first_smb; i < str->len; i++) {
             str->data[i-first_smb] = str->data[i];
         }
