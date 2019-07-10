@@ -33,6 +33,7 @@ void string_set_capacity(string * x, unsigned int new_capacity) {
     x->capacity = new_capacity;
     x->data = new_data;
     x->owned = true;
+
 }
 
 void string_own(string * str) {
@@ -159,7 +160,7 @@ int string_cmp(string a, string b) {
         if (f > 0) {
             return 1;
         } else {
-            return 0;
+            return -1;
         }
     }
 }
