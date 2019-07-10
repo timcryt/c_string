@@ -157,6 +157,19 @@ void test_find() {
     string_free(&s);
 }
 
+void test_replace() {
+    string s = slice_from_cstr("abcabcabc");
+    string_replace(&s, slice_from_cstr("ab"), slice_from_cstr("gh"));
+    assert(string_eq(s, slice_from_cstr("ghcghcghc")));
+
+    string t = slice_from_cstr("a");
+    string_replace(&t, slice_from_cstr("b"), slice_from_cstr("c"));
+    assert(string_eq(t, slice_from_cstr("a")));
+
+    string_free(&s);
+    string_free(&t);
+}
+
 int main() {
     test_constructs_destructors();
     test_append();
@@ -167,4 +180,5 @@ int main() {
     test_trim();
     test_cmp();
     test_find();
+    test_replace();
 }

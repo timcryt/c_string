@@ -195,3 +195,21 @@ unsigned int string_find(string where, string what) {
 int string_contains(string where, string what) {
     return string_find(where, what) != where.len;
 }
+
+void string_replace(string * s, string from, string to) {
+    int i = 0;
+    string mai = *s;
+    string new = string_new();
+    while (i <= mai.len - from.len) {
+        if (string_eq(string_slice(mai, i, i + from.len), from)) {
+            string_append(&new, to);
+            i += from.len;
+        } else {
+            string_push(&new, mai.data[i]);
+            i++;
+        }
+    }
+    string_append(&new, string_slice(mai, i, mai.len));
+    string_free(s);
+    *s = new;
+}

@@ -40,4 +40,6 @@ int string_gt(string a, string b);
 unsigned int string_find(string where, string what);
 int string_contains(string where, string what);
 
+void string_replace(string * s, string from, string to);
+
 #endif
