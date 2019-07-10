@@ -1,3 +1,4 @@
+#include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 
@@ -212,4 +213,36 @@ void string_replace(string * s, string from, string to) {
     string_append(&new, string_slice(mai, i, mai.len));
     string_free(s);
     *s = new;
+}
+
+void string_fprint(FILE * stream, string s) {
+    for (int i = 0; i < s.len; i++) {
+        fputc(s.data[i], stream);
+    }
+}
+
+inline void string_fprintln(FILE * stream, string s) {
+    string_fprint(stream, s);
+    fputc('\n', stream);
+    fflush(stream);
+}
+
+inline void string_print(string s) {
+    string_fprint(stdout, s);
+}
+
+inline void string_println(string s) {
+    string_fprintln(stdout, s);
+}
+
+void string_finput(FILE * stream, string * s) {
+    char c;
+    *s = string_new();
+    while ((c = fgetc(stream)) != '\n') {
+        string_push(s, c);
+    }
+}
+
+inline void string_input(string * s) {
+    string_finput(stdin, s);
 }

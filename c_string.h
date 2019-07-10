@@ -42,4 +42,12 @@ int string_contains(string where, string what);
 
 void string_replace(string * s, string from, string to);
 
+void string_fprint(FILE * stream, string s);
+void string_fprintln(FILE * stream, string s);
+void string_print(string s);
+void string_println(string s);
+
+void string_finput(FILE * stream, string * s);
+void string_input(string * s);
+
 #endif
