@@ -166,15 +166,15 @@ int string_cmp(string a, string b) {
     }
 }
 
-inline int string_lt(string a, string b) {
+inline bool string_lt(string a, string b) {
     return string_cmp(a, b) == -1;
 }
 
-inline int string_eq(string a, string b) {
+inline bool string_eq(string a, string b) {
     return string_cmp(a, b) == 0;
 }
 
-inline int string_gt(string a, string b) {
+inline bool string_gt(string a, string b) {
     return string_cmp(a, b) == 1;
 }
 
@@ -193,7 +193,7 @@ unsigned int string_find(string where, string what) {
     }
 }
 
-int string_contains(string where, string what) {
+inline bool string_contains(string where, string what) {
     return string_find(where, what) != where.len;
 }
 

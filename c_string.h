@@ -49,16 +49,16 @@ void string_trim(string * str);
 /* Сравнивает строки */
 int string_cmp(string a, string b);
 /* Возвращает 1, если строка a меньше строки b */
-int string_lt(string a, string b);
+bool string_lt(string a, string b);
 /* Возвращает 1, если две строки равны */
-int string_eq(string a, string b);
+bool string_eq(string a, string b);
 /* Возвращает 1, если строка a больше строки b */
-int string_gt(string a, string b);
+bool string_gt(string a, string b);
 
 /* Находит первое вхождение строки what в строке where */
 unsigned int string_find(string where, string what);
 /* Возвращает 1, если строка where содержит строку what */
-int string_contains(string where, string what);
+bool string_contains(string where, string what);
 
 /* Заменяет все вхождения строки from на сторику to в строке s  */
 void string_replace(string * s, string from, string to);
